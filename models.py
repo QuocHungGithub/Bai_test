@@ -6,10 +6,14 @@ mongo = PyMongo()
 
 class Question:
     @staticmethod
+    # phương thức trả về tất cả câu hỏi từ bộ sưu tập question
     def get_all():
         return list(mongo.db.questions.find())
     
     @staticmethod
+#  get_by_level(level): Phương thức này tìm câu hỏi theo cấp độ (level).
+# if isinstance(level, str) and level.isdigit(): Kiểm tra nếu level là chuỗi và có thể chuyển đổi thành số nguyên. Nếu đúng, nó chuyển chuỗi thành số nguyên.
+# mongo.db.questions.find_one({"level": level}): Truy vấn MongoDB để tìm một câu hỏi có trường level bằng với giá trị đã cho.
     def get_by_level(level):
       
         if isinstance(level, str) and level.isdigit():
@@ -52,6 +56,9 @@ class Game:
         )
     
     @staticmethod
+# use_lifeline(game_id, lifeline): Phương thức này đánh dấu một "lifeline" (trợ giúp) là đã sử dụng (ví dụ: fifty_fifty).
+# f"lifelines.{lifeline}": Đây là cách sử dụng cú pháp động để cập nhật một trường trong tài liệu, với trường hợp này là trường lifelines cho các lifeline cụ thể (ví dụ: lifelines.fifty_fifty).
+# {f"lifelines.{lifeline}": False}: Đánh dấu lifeline là đã sử dụng bằng cách gán giá trị False.
     def use_lifeline(game_id, lifeline):
         if isinstance(game_id, str):
             game_id = ObjectId(game_id)

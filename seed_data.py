@@ -7,10 +7,14 @@ from models import mongo, Question
 # config
 from config import Config
 
+# tạo ứng dụng Flask
 app = Flask(__name__)
+# đọc và kết nối tới file config
 app.config.from_object(Config)
+# kết nối mogo
 mongo.init_app(app)
 
+# chèn câu hỏi vào mongo
 def seed_questions():
     mongo.db.questions.delete_many({})
     
@@ -107,11 +111,12 @@ def seed_questions():
         }
     ]
     
+    # duyệt qua rồi chèn câu hỏi vào
     for question in questions:
         mongo.db.questions.insert_one(question)
     
    
-
+# để chạy ứng dụng
 if __name__ == "__main__":
     with app.app_context():
         seed_questions()
