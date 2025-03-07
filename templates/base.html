@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ai Là Triệu Phú </title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body class=" text-white min-h-screen">
+    <div class="container mx-auto px-4 py-8">
+        <header class="text-center mb-8">
+            <h1 class="text-4xl font-bold text-yellow-400">Ai Là Triệu Phú</h1>
+            
+        </header>
+        
+        <main>
+            {% block content %}{% endblock %}
+        </main>
+        
+        <footer class="mt-12 text-center text-sm text-blue-300">
+            <p> Ai Là Triệu Phú - 2025  </p>
+           
+        </footer>
+    </div>
+    
+    <script src="{{ url_for('static', filename='js/game.js') }}"></script>
+    {% block scripts %}{% endblock %}
+</body>
+</html>

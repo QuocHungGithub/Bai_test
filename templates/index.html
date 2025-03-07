@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<!-- Bảng thông tin để chơi trò chơi -->
+<div class="max-w-md mx-auto bg-blue-800 rounded-lg shadow-lg p-8">
+    <h2 class="text-2xl font-bold text-center mb-6">Chào mừng đến với Ai Là Triệu Phú!</h2>
+    
+    <div class="mb-8">
+        <p class="mb-4">Bạn đã sẵn sàng để thử thách kiến thức của mình và trở thành triệu phú?</p>
+        <ul class="list-disc pl-5 space-y-2">
+            <li>15 câu hỏi với độ khó tăng dần</li>
+            <li>Mỗi câu hỏi có 4 đáp án</li>
+            <li>Mốc an toàn ở câu hỏi số 5 và 10</li>
+            <li>1 sự trợ giúp: 50:50</li>
+            <li>Giới hạn thời gian cho mỗi câu hỏi 60s</li>
+            <li>Bạn có thể dừng cuộc chơi sau câu hỏi số 5 và 10 và nhận phần thưởng</li>
+        </ul>
+    </div>
+    
+    <form action="{{ url_for('start_game') }}" method="post" class="space-y-4">
+        <div>
+            <label for="player_name" class="block mb-2">Tên người chơi:</label>
+            <input type="text" id="player_name" name="player_name" required
+                   class="w-full px-4 py-2 rounded bg-blue-700 border border-blue-500 focus:outline-none focus:ring-2 focus:ring-yellow-400">
+        </div>
+        
+        <button type="submit" class="w-full bg-yellow-500 hover:bg-yellow-600 text-blue-900 font-bold py-3 px-4 rounded transition duration-200">
+            Bắt đầu chơi
+        </button>
+    </form>
+</div>
+{% endblock %}

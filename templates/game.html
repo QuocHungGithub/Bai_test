@@ -1,0 +1,90 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+    <!-- Left - Bảng giải thưởng-->
+    <div class="lg:col-span-1 bg-blue-800 rounded-lg p-4">
+        <h3 class="text-xl font-bold mb-4 text-center text-yellow-400">Bảng giải thưởng</h3>
+        <ul class="space-y-2">
+            {% for prize in prize_money|reverse %}
+            {% set level = prize_money|length - loop.index0 %}
+            <li class="py-1 px-2 rounded 
+                    {% if level == game.current_level %}
+                        bg-yellow-500 text-blue-900 font-bold
+                    {% elif level == 5 or level == 10 %}
+                        border border-yellow-400 text-yellow-400
+                    {% else %}
+                        text-white
+                    {% endif %}">
+                <span class="inline-block w-8">{{ level }}</span>
+                <span class="float-right">{{ "{:,}".format(prize) }} VNĐ</span>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+
+    <!-- right -->
+    <div class="lg:col-span-2">
+        <!-- thời gian và quyền trợ gíup -->
+        <div class="flex justify-between items-center mb-6 bg-blue-800 rounded-lg p-4">
+            <div class="text-xl font-bold">
+                <span id="timer" class="text-2xl text-yellow-400">{{ remaining_time }}</span> giây
+            </div>
+
+            <div class="flex space-x-4">
+                <button id="fifty-fifty"
+                    class="lifeline-btn {% if not game.lifelines.fifty_fifty %}opacity-50 cursor-not-allowed{% endif %}"
+                    {% if not game.lifelines.fifty_fifty %}disabled{% endif %}>
+                    <span class="block text-xl font-bold">50:50</span>
+                </button>
+            </div>
+        </div>
+        <!-- bảng câu hỏi-->
+
+        <div class="bg-blue-800 rounded-lg p-6 mb-6">
+            <div class="mb-6">
+                <h3 class="text-lg text-blue-300 mb-2">Câu hỏi số {{ game.current_level }}:</h3>
+                <p class="text-2xl font-bold">{{ question.question }}</p>
+            </div>
+
+            <form id="answer-form" action="{{ url_for('answer') }}" method="post">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                    {% for option in question.options %}
+                    <div class="option-wrapper">
+                        <button type="submit" name="answer" value="{{ option }}"
+                            class="option-btn w-full text-left bg-blue-700 hover:bg-blue-600 text-white py-3 px-4 rounded transition duration-200">
+                            {{ option }}
+                        </button>
+                    </div>
+                    {% endfor %}
+                </div>
+
+                <div class="flex justify-between">
+                    <form action="{{ url_for('walk_away') }}" method="post" class="inline">
+                        <button type="submit" class="bg-red-600 flex justify-center hover:bg-red-700 text-white py-2 px-4 rounded">
+                            Dừng cuộc chơi
+                        </button>
+                    </form>
+                </div>
+            </form>
+        </div>
+
+        <!-- Phần Thông tin những giải thưởng câu hiện tại và tiếp theo-->
+        <div class="bg-blue-800 rounded-lg p-4 text-center">
+            <p class="text-lg">
+                Giải thưởng hiện tại: <span class="text-yellow-400 font-bold">{{ "{:,}".format(current_prize) }}
+                    VNĐ</span>
+            </p>
+            {% if next_prize %}
+            <p class="text-sm text-blue-300">
+                Giải thưởng tiếp theo: {{ "{:,}".format(next_prize) }} VNĐ
+            </p>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+
+
+
+{% endblock %}

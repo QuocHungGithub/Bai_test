@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<!-- Bảng kết thúc trò chơi khi thắng và khi thua -->
+<div class="max-w-lg mx-auto bg-blue-800 rounded-lg shadow-lg p-8 text-center">
+    <h2 class="text-3xl font-bold mb-6">Kết thúc trò chơi!</h2>
+    
+    {% if game.current_level > 15 %}
+        <div class="mb-8">
+            <div class="w-32 h-32 mx-auto mb-4 bg-yellow-400 rounded-full flex items-center justify-center">
+                <span class="text-blue-900 text-6xl">🏆</span>
+            </div>
+            <p class="text-2xl font-bold text-yellow-400 mb-2">Chúc mừng!</p>
+            <p class="text-xl">Bạn đã trở thành triệu phú!</p>
+        </div>
+    {% else %}
+        <div class="mb-8">
+            <p class="text-xl mb-2">
+                {% if game.won_amount > 0 %}
+                    Bạn đã chơi rất tốt!
+                {% else %}
+                    Rất tiếc!
+                {% endif %}
+            </p>
+            <p class="text-lg text-blue-300">Bạn đã trả lời đúng {{ game.current_level - 1 }} câu hỏi</p>
+        </div>
+    {% endif %}
+    
+    <div class="bg-blue-700 rounded-lg p-6 mb-8">
+        <h3 class="text-xl mb-2">Số tiền thắng được:</h3>
+        <p class="text-3xl font-bold text-yellow-400">{{ "{:,}".format(game.won_amount) }} VNĐ</p>
+    </div>
+    
+    <a href="{{ url_for('index') }}" class="inline-block bg-yellow-500 hover:bg-yellow-600 text-blue-900 font-bold py-3 px-10 rounded-lg rounded transition duration-200">
+        Chơi lại
+    </a>
+</div>
+{% endblock %}
